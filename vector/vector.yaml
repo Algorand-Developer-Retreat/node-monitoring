@@ -1,0 +1,31 @@
+sources:
+  algod:
+    type: file
+    include:
+      - "/var/lib/algorand/node.log" # Path to your Algorand node log file
+transforms:
+  transform_item:
+    type: remap
+    inputs:
+      - algod
+    source: |
+      . = parse_json!(string!(.message))
+      .details = encode_json(.details)
+      ._time = .time
+      del(.time)
+      del(.function)
+      del(.instanceName)
+      del(.line)
+  algod_telemetry:
+    type: filter
+    inputs:
+      - transform_item
+    condition:
+      type: vrl
+      source: '.file == "telemetry.go"'
+sinks:
+  axiom:
+    type: "axiom"
+    inputs: ["algod_telemetry"]
+    token: "YOUR_AXIOM_TOKEN" # Your Axiom token
+    dataset: "YOUR_AXIOM_DATASET_NAME" # Your Axiom dataset name
