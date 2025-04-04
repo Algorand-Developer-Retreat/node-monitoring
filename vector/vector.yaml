@@ -3,6 +3,14 @@ sources:
     type: file
     include:
       - "/var/lib/algorand/node.log" # Path to your Algorand node log file
+  host_metrics:
+    type: host_metrics
+    scrape_interval_secs: 60
+    collectors:
+      - cpu
+      - memory
+      - disk
+      - network
 transforms:
   transform_item:
     type: remap
@@ -25,7 +33,9 @@ transforms:
       source: '.file == "telemetry.go"'
 sinks:
   axiom:
-    type: "axiom"
-    inputs: ["algod_telemetry"]
+    type: axiom
+    inputs:
+      - algod_telemetry
+      - host_metrics
     token: "YOUR_AXIOM_TOKEN" # Your Axiom token
     dataset: "YOUR_AXIOM_DATASET_NAME" # Your Axiom dataset name
