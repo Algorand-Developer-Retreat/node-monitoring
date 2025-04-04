@@ -12,7 +12,49 @@ Axiom is a hosted product, so no installation is required. The following steps w
 
 ## Configuration
 
-Once you have logs available in Axiom you can then configure Axiom to the configuration you desire.
+Once you have logs available in Axiom you can then configure Axiom to your needs.
 
-> [!NOTE]
-> Example configuration will be added soon
+Unfortunately Axiom doesn't have an API or a mechanism to import dashboards or monitors, so you'll need to manually create them. The below configuration is a simple one you can use to check your node is online using the `/Agreement/BlockAccepted` event.
+
+**Dashboard**
+
+![Dashboard](./images/dashboard.png "Dashboard")
+
+`Blocks Proposed` statistic
+```apl
+nalgo
+| where msg =~ "/Agreement/BlockProposed"
+| summarize count() by bin_auto(_time)
+```
+
+`Blocks Accepted` statistic
+```apl
+nalgo
+| where msg =~ "/Agreement/BlockAccepted"
+| summarize count() by bin_auto(_time)
+```
+
+`Votes` statistic
+```apl
+nalgo
+| where msg =~ "/Agreement/VoteSent"
+| summarize count() by bin_auto(_time)
+```
+
+`Actions` note
+```md
+# Actions
+[Take the account offline](http://lora.algokit.io/mainnet/transaction-wizard?type[0]=keyreg&sender[0]=YOUR_ADDRESS_GOES_HERE)
+```
+
+**Monitor**
+
+`Node Online` monitor
+
+![Monitor](./images/node_online_monitor.png "Monitor")
+
+```apl
+nalgo
+| where msg =~ "/Agreement/BlockAccepted"
+| summarize count() by bin(_time, 1m)
+```
