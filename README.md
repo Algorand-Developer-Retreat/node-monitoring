@@ -15,9 +15,19 @@ This setup utilises: [Vector](https://github.com/vectordotdev/vector) (for log f
 The configuration looks something like below:
 
 ```mermaid
-flowchart TD
-    A(Algorand Node)-->|node.log|B(vector)
-    B -->|filtered log events|C(Axiom)
+block-beta
+    columns 2
+
+  block:e:2
+          l["algod"]
+          m(" ")
+          r["Vector"]
+          r --> l
+
+  end
+    space down2<["logs"]>(down) space
+    Axiom
+    style m fill:transparent,stroke-width:0px
 ```
 
 [See here for the Axiom setup](./axiom/README.md)
