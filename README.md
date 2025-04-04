@@ -42,7 +42,8 @@ Such a tool would be mainly useful for solo stakers with relatively small Algo b
 
 ## Options
 
-1. Pre signed keyreg transactions
+### Pre signed keyreg transactions
+
 The idea here is to create a keyreg transaction, sign it, store it and send it when the node is detected as offline.
 
 The trouble is that we don't know when the node might go offline (which round), so we'd need a very large validity window for this transaction. Algod assets the round range is 1000 blocks or less (approx 45mins), so we'd need to store more than a single transaction to cover a larger window.
@@ -51,7 +52,7 @@ We could build a tool to generate one transaction for each 1000 block range in a
 
 As a result this option is not feasible.
 
-1. Use a delegated logic sig
+### Use a delegated logic sig
 
 Delegated LogicSigs are a powerful (and also potentially dangerous) feature, which allows one account to sign transactions on behalf of another account using a TEAL program.
 

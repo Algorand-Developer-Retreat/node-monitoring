@@ -13,3 +13,6 @@ Axiom is a hosted product, so no installation is required. The following steps w
 ## Configuration
 
 Once you have logs available in Axiom you can then configure Axiom to the configuration you desire.
+
+> [!NOTE]
+> Example configuration will be added soon
