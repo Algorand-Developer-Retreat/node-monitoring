@@ -20,24 +20,31 @@ Unfortunately Axiom doesn't have an API or a mechanism to import dashboards or m
 
 ![Dashboard](./images/dashboard.png "Dashboard")
 
+`Block Proposals Won` statistic
+```apl
+dataset_name
+| where msg == "/Agreement/BlockAccepted" and ["data.address"] == "YOUR_ADDRESS_GOES_HERE"
+| summarize count() by bin_auto(_time)
+```
+
 `Blocks Proposed` statistic
 ```apl
-nalgo
-| where msg =~ "/Agreement/BlockProposed"
+dataset_name
+| where msg == "/Agreement/BlockProposed"
 | summarize count() by bin_auto(_time)
 ```
 
 `Blocks Accepted` statistic
 ```apl
-nalgo
-| where msg =~ "/Agreement/BlockAccepted"
+dataset_name
+| where msg == "/Agreement/BlockAccepted"
 | summarize count() by bin_auto(_time)
 ```
 
 `Votes` statistic
 ```apl
-nalgo
-| where msg =~ "/Agreement/VoteSent"
+dataset_name
+| where msg == "/Agreement/VoteSent"
 | summarize count() by bin_auto(_time)
 ```
 
@@ -54,7 +61,7 @@ nalgo
 ![Monitor](./images/node_online_monitor.png "Monitor")
 
 ```apl
-nalgo
-| where msg =~ "/Agreement/BlockAccepted"
+dataset_name
+| where msg == "/Agreement/BlockAccepted"
 | summarize count() by bin(_time, 1m)
 ```

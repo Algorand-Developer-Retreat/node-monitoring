@@ -18,8 +18,12 @@ transforms:
       - algod
     source: |
       . = parse_json!(string!(.message))
-      .details = encode_json(.details)
       ._time = .time
+      if .msg != null && starts_with(string!(.msg), "/Agreement/") {
+        .data.address = .details.Address
+        .data.round = .details.Round
+      }
+      .details = encode_json(.details)
       del(.time)
       del(.function)
       del(.instanceName)
